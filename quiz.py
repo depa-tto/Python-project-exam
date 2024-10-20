@@ -267,7 +267,7 @@ class QuizGame:
                     break
                 elif play_again == 'yes':
                     self.score = 0
-                    self.dataset = pd.read_csv('merge_set')
+                    self.dataset = pd.read_csv('./merge_set.csv')
                     print('-------------------------------------------')
                 else:
                     print('You are exiting the game')

@@ -10,4 +10,4 @@ from quiz import QuizGame # type: ignore
 
 merge_set = pd.read_csv('./merge_set.csv')
 game = QuizGame(merge_set)
-game.play()
+game.quiz()

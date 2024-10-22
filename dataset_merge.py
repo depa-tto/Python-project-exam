@@ -1,5 +1,12 @@
-import pandas as pd # type: ignore
+"""
+dataset_merge.py
+
+This module is responsible for merging multiple datasets into a single cohesive dataset.
+It includes functions for reading, cleaning, and combining data from various sources
+and formats, ensuring consistency and removing duplicates.
+"""
 import os # type: ignore
+import pandas as pd # type: ignore
 import opendatasets as od # type: ignore
 import numpy as np # type: ignore
 

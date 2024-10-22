@@ -1,7 +1,13 @@
-import pandas as pd  # type: ignore
-import random # type: ignore
-import time # type: ignore
+"""
+quiz.py
 
+This module contains the logic for a quiz application.
+It includes functions to ask questions, validate answers,
+calculate scores, and display results to the user.
+"""
+import time # type: ignore
+import random # type: ignore
+import pandas as pd  # type: ignore
 class QuizGame:
     """A class to represent a quiz game.
 
@@ -40,8 +46,7 @@ class QuizGame:
             
             if dif not in ['hard', 'medium', 'easy']:
                 print("Please insert a proper difficulty between: 'hard', 'medium', 'easy'")
-            else: 
-                # Filtering the dataset based on difficulty
+            else:
                 if dif == 'hard':
                     self.dataset = self.dataset[(self.dataset['start_year'] <= 1966) & (~self.dataset['region'].isin(['US', 'CA']))]
                     print('Rules: +1 if correct, -1 if incorrect.')
@@ -78,7 +83,7 @@ class QuizGame:
         correct_answer = self.dataset['start_year'].iloc[indices]
         question = f"In which year was '{title}' made in {region} of {name_surname} as a {role} produced?"
         
-        return question, correct_answer 
+        return question, correct_answer
 
     def second_question(self):
         """Generate the second question for the quiz.
@@ -114,7 +119,7 @@ class QuizGame:
         correct_answer = self.dataset['title'].iloc[indices]
         question = f"What was the title of the {movie_type} made in {region} with {name_surname} as a {role}?"
         
-        return question, correct_answer  
+        return question, correct_answer
 
     def fourth_question(self):
         """Generate the fourth question for the quiz.
@@ -225,7 +230,7 @@ class QuizGame:
         chosen_index = letters.index(my_answer)
         chosen_answer = choices[chosen_index]
 
-        return chosen_answer, correct_answer 
+        return chosen_answer, correct_answer
 
     def quiz(self):
         """Start the quiz game, asking a set number of questions based on difficulty.
@@ -264,13 +269,14 @@ class QuizGame:
                 
                 play_again = input("Thank you for playing, would you like to play again? Enter 'yes' or 'no': ").strip().lower()
                 if play_again == 'no':
+                    print('You are exiting the game. Thank you for playing!')
                     break
                 elif play_again == 'yes':
                     self.score = 0
                     self.dataset = pd.read_csv('./merge_set.csv')
                     print('-------------------------------------------')
                 else:
-                    print('You are exiting the game')
+                    print('You are exiting the game. Thank you for playing!')
                     break
 
             else:

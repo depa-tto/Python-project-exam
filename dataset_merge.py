@@ -94,7 +94,6 @@ merge_set["type"] = merge_set["type"].replace(
     {"tvSeries": "tv series", "tvMiniSeries": "tv mini Series"}
 )
 merge_set["first_profession"] = merge_set["first_profession"].str.replace("_", " ")
-merge_set["first_profession"].unique()
 merge_set["start_year"] = (
     pd.to_numeric(merge_set["start_year"], errors="coerce").fillna(0).astype(int)
 )

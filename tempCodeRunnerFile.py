@@ -1,0 +1,1 @@
+movie_df = movie_df.loc[movie_df['titleType'] == 'tvSeries']

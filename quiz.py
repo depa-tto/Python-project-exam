@@ -35,20 +35,17 @@ class QuizGame:
                 if dif == "hard":
                     self.dataset = self.dataset[
                         (self.dataset["start_year"] <= 1966)
-                        & (~self.dataset["region"].isin(["US", "CA"]))
                     ]
                     print("Rules: +1 if you are correct, -1 if incorrect")
                 elif dif == "medium":
                     self.dataset = self.dataset[
                         (self.dataset["start_year"] >= 1967)
                         & (self.dataset["start_year"] <= 1987)
-                        & (self.dataset["region"].isin(["US", "CA"]))
                     ]
                     print("Rules: +1 if you are correct, -0.5 if incorrect")
                 elif dif == "easy":
                     self.dataset = self.dataset[
                         (self.dataset["start_year"] >= 1988)
-                        & (self.dataset["region"].isin(["US", "CA"]))
                         & (
                             self.dataset["first_profession"].isin(
                                 ["actor", "actress", "writer", "producer", "director"]
@@ -78,12 +75,11 @@ class QuizGame:
         self.dataset = self.dataset.reset_index(drop=True)
         indices = random.choice(self.dataset.index)
         title = self.dataset["title"].iloc[indices]
-        region = self.dataset["region"].iloc[indices]
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
         correct_answer = self.dataset["start_year"].iloc[indices]
         question = (
-            f"in which year was '{title}' made in {region} of {name_surname} as a {role} produced ?"
+            f"in which year was '{title}' of {name_surname} as a {role} component produced ?"
         )
         return question, correct_answer
 
@@ -92,12 +88,11 @@ class QuizGame:
         self.dataset = self.dataset.reset_index(drop=True)
         indices = random.choice(self.dataset.index)
         title = self.dataset["title"].iloc[indices]
-        region = self.dataset["region"].iloc[indices]
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
         correct_answer = self.dataset["genre_1"].iloc[indices]
         question = (
-            f"what genre is '{title}' made in {region} of {name_surname} as a {role} ?"
+            f"what genre is '{title}' of {name_surname} as a {role} component ?"
         )
         return question, correct_answer
 
@@ -108,10 +103,9 @@ class QuizGame:
         movie_type = self.dataset["type"].iloc[indices]
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
-        region = self.dataset["region"].iloc[indices]
         correct_answer = self.dataset["title"].iloc[indices]
         question = (
-            f"what was the title of the {movie_type} made in {region} with {name_surname} as a {role} ?"
+            f"what was the title of the {movie_type} with {name_surname} as a {role} component ?"
         )
         return question, correct_answer
 

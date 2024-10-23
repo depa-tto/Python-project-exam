@@ -8,6 +8,10 @@ player inputs, calculating scores, and determining the winner.
 import pandas as pd # type: ignore
 from quiz import QuizGame # type: ignore
 
-merge_set = pd.read_csv('./merge_set.csv')
-game = QuizGame(merge_set)
+game_set = pd.read_csv('./merge_set.csv')
+game_set(['region'], axis=1, inplace=True)
+game_set.drop_duplicates(inplace=True)
+game_set.to_csv("game_set.csv")
+
+game = QuizGame(game_set)
 game.quiz()

@@ -54,7 +54,6 @@ movie_df = movie_df.rename(
         "tconst": "movie_id",
         "titleType": "type",
         "primaryTitle": "title",
-        "originalTitle": "original_title",
         "isAdult": "adult",
         "startYear": "start_year",
         "runtimeMinutes": "minutes_runtimes",
@@ -67,11 +66,6 @@ region_df = pd.read_table(
 )
 region_df.replace("\\N", np.nan, inplace=True)
 region_df.dropna(inplace=True)
-
-
-print(roles_df)
-print(movie_df)
-print(region_df)
 
 merge_set1 = pd.merge(roles_df, movie_df, left_on="movie_1", right_on="movie_id").drop(
     ["movie_1", "movie_2", "movie_3", "movie_4", "name_id"], axis=1
@@ -87,8 +81,8 @@ merge_set4 = pd.merge(roles_df, movie_df, left_on="movie_4", right_on="movie_id"
 )
 merge_set = pd.concat([merge_set1, merge_set2, merge_set3, merge_set4])
 merge_set.drop_duplicates(inplace=True)
-merge_set = pd.merge(merge_set, region_df, left_on="movie_id", right_on="titleId").drop(
-    ["movie_id", "titleId"], axis=1
+pd.merge(merge_set, region_df, left_on="movie_id", right_on="titleId").drop(
+    ["movie_id", "titleId"], axis=1, inplace=True
 )
 
 merge_set["first_profession"] = merge_set["first_profession"].str.replace("_", " ")

@@ -28,24 +28,25 @@ class QuizGame:
                 .lower()
             )
             if dif not in ["hard", "medium", "easy"]:
-                print(
-                    "please insert a proper difficulty "
-                )
+                print("please insert a proper difficulty ")
             else:
                 if dif == "hard":
-                    self.dataset = self.dataset[
-                        (self.dataset["start_year"] <= 1966)
-                    ]
+                    self.dataset = self.dataset[(self.dataset["start_year"] <= 1974)]
                     print("Rules: +1 if you are correct, -1 if incorrect")
                 elif dif == "medium":
                     self.dataset = self.dataset[
-                        (self.dataset["start_year"] >= 1967)
-                        & (self.dataset["start_year"] <= 1987)
+                        (self.dataset["start_year"] >= 1975)
+                        & (self.dataset["start_year"] <= 2004)
+                        & (
+                            self.dataset["first_profession"].isin(
+                                ["actor", "actress", "writer", "producer", "director"]
+                            )
+                        )
                     ]
                     print("Rules: +1 if you are correct, -0.5 if incorrect")
                 elif dif == "easy":
                     self.dataset = self.dataset[
-                        (self.dataset["start_year"] >= 1988)
+                        (self.dataset["start_year"] >= 2005)
                         & (
                             self.dataset["first_profession"].isin(
                                 ["actor", "actress", "writer", "producer", "director"]
@@ -77,10 +78,9 @@ class QuizGame:
         title = self.dataset["title"].iloc[indices]
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
+        movie_type = self.dataset["type"].iloc[indices]
         correct_answer = self.dataset["start_year"].iloc[indices]
-        question = (
-            f"in which year was '{title}' of {name_surname} as a {role} component produced ?"
-        )
+        question = f"in which year was the {movie_type} '{title}' of {name_surname} as a {role} component produced ?"
         return question, correct_answer
 
     def second_question(self):
@@ -90,10 +90,9 @@ class QuizGame:
         title = self.dataset["title"].iloc[indices]
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
+        movie_type = self.dataset["type"].iloc[indices]
         correct_answer = self.dataset["genre_1"].iloc[indices]
-        question = (
-            f"what genre is '{title}' of {name_surname} as a {role} component ?"
-        )
+        question = f"what genre is the {movie_type} '{title}' of {name_surname} as a {role} component ?"
         return question, correct_answer
 
     def third_question(self):
@@ -104,9 +103,7 @@ class QuizGame:
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
         correct_answer = self.dataset["title"].iloc[indices]
-        question = (
-            f"what was the title of the {movie_type} with {name_surname} as a {role} component ?"
-        )
+        question = f"what was the title of the {movie_type} with {name_surname} as a {role} component ?"
         return question, correct_answer
 
     def fourth_question(self):
@@ -117,9 +114,7 @@ class QuizGame:
         title = self.dataset["title"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
         correct_answer = self.dataset["name_surname"].iloc[indices]
-        question = (
-            f"who was the {role} of the {movie_type} named '{title}' ?"
-        )
+        question = f"who was the {role} of the {movie_type} named '{title}' ?"
         return question, correct_answer
 
     def score_fun(self, my_answer, correct_answer, dif):
@@ -258,9 +253,9 @@ class QuizGame:
                 )
             )
             if play_again == "no":
-                print('you are exiting the game, thank you for playing!')
+                print("you are exiting the game, thank you for playing!")
                 break
-            elif play_again == "yes":
+            if play_again == "yes":
                 self.score = 0
                 self.dataset = pd.read_csv("./game_set.csv")
                 print("-------------------------------------------")

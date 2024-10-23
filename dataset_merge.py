@@ -20,7 +20,7 @@ os.listdir(data_dir)
 roles_df = pd.read_table(
     "./imdb-dataset/name.basics.tsv", sep="\t"
 )
-roles_df = roles_df.drop(['deathYear'], axis=1)
+roles_df.drop(['deathYear'], axis=1, inplace=True)
 roles_df.replace("\\N", np.nan, inplace=True)
 roles_df.dropna(inplace=True)
 roles_df[["first_profession", "second_profession", "third_profession"]] = roles_df[
@@ -43,6 +43,8 @@ roles_df = roles_df.rename(
 movie_df = pd.read_table(
     "./imdb-dataset/title.basics.tsv", sep="\t"
 )
+movie_df.drop(['endYear','originalTitle'], axis=1, inplace=True)
+movie_df = movie_df.loc[(movie_df['titleType'] == 'tvSeries') | (movie_df['titleType'] == 'movie')]
 movie_df.replace("\\N", np.nan, inplace=True)
 movie_df.dropna(inplace=True)
 movie_df[["genre_1", "genre_2", "genre_3"]] = movie_df["genres"].str.split(
@@ -60,7 +62,9 @@ movie_df = movie_df.rename(
         "runtimeMinutes": "minutes_runtimes",
     }
 )
-
+movie_df["type"] = movie_df["type"].replace(
+    {"tvSeries": "tv series"}
+)
 
 region_df = pd.read_table(
     "./imdb-dataset/title.akas.tsv", sep="\t", usecols=["titleId", "region"]

@@ -104,7 +104,8 @@ merge_set.drop_duplicates(inplace=True)
 print(merge_set)
 merge_set.to_csv("merge_set.csv", index=False)
 
-game_set = pd.read_csv("./merge_set.csv")
+game_set = pd.read_csv('./merge_set.csv')
 game_set.drop(["region"], axis=1, inplace=True)
 game_set.drop_duplicates(inplace=True)
 game_set.to_csv("game_set.csv", index=False)
+

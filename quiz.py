@@ -145,14 +145,19 @@ class QuizGame:
         """
         if correct_answer in self.dataset["start_year"].values:
             incorrect_ans = [
-                correct_answer - random.choice([2, 4, 6, 8]),
-                correct_answer - random.choice([1, 3, 5, 7, 9]),
-                correct_answer - random.choice([10, 15, 20, 25, 30]),
+                correct_answer - random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                correct_answer + random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9]),
+                correct_answer - random.choice([10, 15, 20, 25, 30, 35, 40, 45, 50]),
             ]
-            options = [correct_answer] + incorrect_ans
+            adjusted_incorrect_ans = []
+            for i in incorrect_ans:
+                while i >= time.localtime().tm_year:
+                    i -= 1
+                adjusted_incorrect_ans.append(i)
+            options = [correct_answer] + adjusted_incorrect_ans
             random.shuffle(options)
             return options
-        elif correct_answer in self.dataset["genre_1"].values:
+        if correct_answer in self.dataset["genre_1"].values:
             incorrect_ans = random.sample(list(self.dataset["genre_1"].unique()), 3)
             if correct_answer in incorrect_ans:
                 while correct_answer in incorrect_ans:
@@ -162,7 +167,7 @@ class QuizGame:
             options = [correct_answer] + incorrect_ans
             random.shuffle(options)
             return options
-        elif correct_answer in self.dataset["title"].values:
+        if correct_answer in self.dataset["title"].values:
             incorrect_ans = random.sample(list(self.dataset["title"].unique()), 3)
             if correct_answer in incorrect_ans:
                 while correct_answer in incorrect_ans:
@@ -172,7 +177,7 @@ class QuizGame:
             options = [correct_answer] + incorrect_ans
             random.shuffle(options)
             return options
-        elif correct_answer in self.dataset["name_surname"].values:
+        if correct_answer in self.dataset["name_surname"].values:
             incorrect_ans = random.sample(
                 list(self.dataset["name_surname"].unique()), 3
             )
@@ -229,6 +234,7 @@ class QuizGame:
                 self.third_question,
                 self.fourth_question,
             ]
+            random.shuffle(question_funcs)
             for round_number in range(n_round):
                 print("-------------------------------------------")
                 print(f"Round {round_number + 1}")

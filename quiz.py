@@ -122,12 +122,12 @@ class QuizGame:
         if my_answer == correct_answer:
             self.score += 1
             print(
-                f"your answer was {my_answer} and the correct one is {correct_answer}"
+                f"you are correct, '{correct_answer}' is the right answer"
             )
             print(f"your current score is: {self.score}")
         else:
             print(
-                f"your answer was {my_answer} but the correct one is {correct_answer}"
+                f"your answer was '{my_answer}' but the correct one is '{correct_answer}'"
             )
             if dif == "hard":
                 self.score -= 1

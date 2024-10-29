@@ -32,7 +32,7 @@ class QuizGame:
             else:
                 if dif == "hard":
                     self.dataset = self.dataset[(self.dataset["start_year"] <= 1974)]
-                    print("Rules: +1 if you are correct, -1 if incorrect")
+                    print("Rules: +1 if you are correct, -1 otherwise")
                 elif dif == "medium":
                     self.dataset = self.dataset[
                         (self.dataset["start_year"] >= 1975)
@@ -43,7 +43,7 @@ class QuizGame:
                             )
                         )
                     ]
-                    print("Rules: +1 if you are correct, -0.5 if incorrect")
+                    print("Rules: +1 if you are correct, -0.5 otherwise")
                 elif dif == "easy":
                     self.dataset = self.dataset[
                         (self.dataset["start_year"] >= 2005)

@@ -9,6 +9,7 @@ calculate scores, and display results to the user.
 import time  # type: ignore
 import random  # type: ignore
 import pandas as pd  # type: ignore
+from termcolor import cprint # type: ignore
 
 
 class QuizGame:
@@ -23,12 +24,12 @@ class QuizGame:
         """Prompts the user to choose a difficulty level and filters the dataset accordingly."""
         while True:
             dif = (
-                str(input("choose the difficulty between easy, medium and hard: "))
+                str(input("Please choose the difficulty between easy, medium and hard: "))
                 .strip()
                 .lower()
             )
             if dif not in ["hard", "medium", "easy"]:
-                print("please insert a proper difficulty ")
+                print("Please insert a proper difficulty ")
             else:
                 if dif == "hard":
                     self.dataset = self.dataset[(self.dataset["start_year"] <= 1974)]
@@ -80,7 +81,7 @@ class QuizGame:
         role = self.dataset["first_profession"].iloc[indices]
         movie_type = self.dataset["type"].iloc[indices]
         correct_answer = self.dataset["start_year"].iloc[indices]
-        question = f"in which year was the {movie_type} '{title}' of {name_surname} as a {role} component produced ?"
+        question = f"In which year was the {movie_type} '{title}' of {name_surname} as a {role} component produced ?"
         return question, correct_answer
 
     def second_question(self):
@@ -92,7 +93,7 @@ class QuizGame:
         role = self.dataset["first_profession"].iloc[indices]
         movie_type = self.dataset["type"].iloc[indices]
         correct_answer = self.dataset["genre_1"].iloc[indices]
-        question = f"what genre is the {movie_type} '{title}' of {name_surname} as a {role} component ?"
+        question = f"What genre is the {movie_type} '{title}' of {name_surname} as a {role} component ?"
         return question, correct_answer
 
     def third_question(self):
@@ -103,7 +104,7 @@ class QuizGame:
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
         correct_answer = self.dataset["title"].iloc[indices]
-        question = f"what was the title of the {movie_type} with {name_surname} as a {role} component ?"
+        question = f"What was the title of the {movie_type} with {name_surname} as a {role} component ?"
         return question, correct_answer
 
     def fourth_question(self):
@@ -114,20 +115,20 @@ class QuizGame:
         title = self.dataset["title"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
         correct_answer = self.dataset["name_surname"].iloc[indices]
-        question = f"who was the {role} of the {movie_type} named '{title}' ?"
+        question = f"Who was the {role} of the {movie_type} named '{title}' ?"
         return question, correct_answer
 
     def score_fun(self, my_answer, correct_answer, dif):
         """Calculates the score based on the user's answer and the correct answer."""
         if my_answer == correct_answer:
             self.score += 1
-            print(
-                f"you are correct, '{correct_answer}' is the right answer"
+            cprint(
+                f"You are correct, '{correct_answer}' is the right answer", 'green'
             )
-            print(f"your current score is: {self.score}")
+            print(f"Your current score is: {self.score}")
         else:
-            print(
-                f"your answer was '{my_answer}' but the correct one is '{correct_answer}'"
+            cprint(
+                f"Your answer was '{my_answer}' but the correct one is '{correct_answer}'", 'red'
             )
             if dif == "hard":
                 self.score -= 1
@@ -136,7 +137,7 @@ class QuizGame:
 
             if self.score < 0:
                 self.score = 0
-            print(f"your current score is: {self.score}")
+            print(f"Your current score is: {self.score}")
         return self.score
 
     def gen_answers(self, correct_answer):
@@ -209,24 +210,24 @@ class QuizGame:
         """Prompts the user for the number of rounds they wish to play."""
         while True:
             try:
-                n_round = int(input("how many rounds do you want to play? "))
+                n_round = int(input("How many rounds do you want to play? "))
                 if n_round > 0:
                     return n_round
                 else:
-                    print("please enter a positive number of rounds ")
+                    print("Please enter a positive number of rounds ")
             except ValueError:
-                print("please enter a positive number of rounds ")
+                print("Please enter a positive number of rounds ")
 
     def quiz(self):
         """Main quiz function to conduct the quiz game with rounds and score tracking."""
-        print(
-            "welcome! please enter the difficulty and how many rounds do you want to play"
+        cprint(
+            "Welcome to the quiz game about movies and tv series!", attrs=["bold"]
         )
         self.score = 0
         while True:
             self.dataset, dif = self.difficulty()
             n_round = self.rounds()
-            print(f"you are going to play for {n_round} rounds at {dif} level")
+            cprint(f"You are going to play for {n_round} rounds at {dif} level", attrs=["bold"])
             start_time = time.time()
             question_funcs = [
                 self.first_question,
@@ -236,8 +237,8 @@ class QuizGame:
             ]
             random.shuffle(question_funcs)
             for round_number in range(n_round):
-                print("-------------------------------------------")
-                print(f"Round {round_number + 1}")
+                cprint("*----------------------------------------------------------------------------------------------------*", attrs=["bold"])
+                cprint(f"Round {round_number + 1}", attrs=["bold"])
                 question_func = question_funcs[round_number % len(question_funcs)]
                 question, correct_answer = question_func()
                 choices = self.gen_answers(correct_answer)
@@ -247,24 +248,24 @@ class QuizGame:
                 self.score = self.score_fun(chosen_answer, correct_answer, dif)
             end_time = time.time()
             time_involved = end_time - start_time
-            print("-------------------------------------------")
+            cprint("*----------------------------------------------------------------------------------------------------*", attrs=["bold"])
             print(f"It took you {time_involved:.2f} seconds to solve the quiz")
             if self.score / n_round > 0.6:
-                print(f"good job! your final score is {self.score}/{n_round}")
+                print(f"Good job! Your final score is {self.score}/{n_round}")
             else:
-                print(f"you can do better! your final score is {self.score}/{n_round}")
+                print(f"You can do better! your final score is {self.score}/{n_round}")
             play_again = str(
                 input(
-                    "thank you for playing, would you like to play again ? enter 'yes' or 'no': "
+                    "Thank you for playing, would you like to play again ? Enter 'yes' or 'no': "
                 )
             )
             if play_again == "no":
-                print("you are exiting the game, thank you for playing!")
+                cprint("You are exiting the game, thank you for playing!", attrs=["bold"])
                 break
             if play_again == "yes":
                 self.score = 0
                 self.dataset = pd.read_csv("./game_set.csv")
-                print("-------------------------------------------")
+                cprint("*----------------------------------------------------------------------------------------------------*", attrs=["bold"])
             else:
-                print("you are exiting the game, thank you for playing!")
+                cprint("You are exiting the game, thank you for playing!", attrs=["bold"])
                 break

@@ -1,1 +1,1 @@
-question_funcs
+from termcolor import colored, cprint

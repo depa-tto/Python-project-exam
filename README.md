@@ -10,7 +10,7 @@ This project is a Python-based quiz application that uses data analysis and a st
 
 - quiz.py: This file holds the core algorithm and logic for the quiz game. It includes essential functions like question selection, scoring, and answer validation, forming the backbone of the quiz experience.
 
-## How to Run the Project
+## How to run the Project
 - Run dataset_merge.py to generate the necessary datasets.
 - Use py_project.py for initial data analysis (optional but recommended to understand dataset insights).
 - Execute game.py to start and play the quiz.

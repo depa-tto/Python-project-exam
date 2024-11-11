@@ -92,8 +92,9 @@ class QuizGame:
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
         movie_type = self.dataset["type"].iloc[indices]
+        year = self.dataset["start_year"].iloc[indices]
         correct_answer = self.dataset["genre_1"].iloc[indices]
-        question = f"What genre is the {movie_type} '{title}' of {name_surname} as a {role} component ?"
+        question = f"What genre is the {movie_type} '{title}' made in {year} of {name_surname} as a {role} component ?"
         return question, correct_answer
 
     def third_question(self):
@@ -103,8 +104,9 @@ class QuizGame:
         movie_type = self.dataset["type"].iloc[indices]
         name_surname = self.dataset["name_surname"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
+        year = self.dataset["start_year"].iloc[indices]
         correct_answer = self.dataset["title"].iloc[indices]
-        question = f"What was the title of the {movie_type} with {name_surname} as a {role} component ?"
+        question = f"What was the title of the {movie_type} made in {year} with {name_surname} as a {role} component ?"
         return question, correct_answer
 
     def fourth_question(self):
@@ -114,8 +116,9 @@ class QuizGame:
         movie_type = self.dataset["type"].iloc[indices]
         title = self.dataset["title"].iloc[indices]
         role = self.dataset["first_profession"].iloc[indices]
+        year = self.dataset["start_year"].iloc[indices]
         correct_answer = self.dataset["name_surname"].iloc[indices]
-        question = f"Who was the {role} of the {movie_type} named '{title}' ?"
+        question = f"Who was the {role} of the {movie_type} named '{title}' made in {year} ?"
         return question, correct_answer
 
     def score_fun(self, my_answer, correct_answer, dif):
@@ -250,8 +253,10 @@ class QuizGame:
             time_involved = end_time - start_time
             cprint("*----------------------------------------------------------------------------------------------------*", attrs=["bold"])
             print(f"It took you {time_involved:.2f} seconds to solve the quiz")
-            if self.score / n_round > 0.6 and time_involved / n_round < 10:
-                print(f"Good job! Your final score is {self.score}/{n_round}")
+            if self.score / n_round > 0.6 and time_involved / n_round > 10:
+                print(f"Good job! Your final score is {self.score}/{n_round}. Try again to complete the quiz faster!")
+            elif self.score / n_round > 0.6 and time_involved / n_round < 10:
+                print(f"Good job! Your final score is {self.score}/{n_round} and you were preatty fast!")
             else:
                 print(f"You can do better! your final score is {self.score}/{n_round}")
             play_again = str(

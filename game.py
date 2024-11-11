@@ -11,3 +11,4 @@ from quiz import QuizGame # type: ignore
 game_set = pd.read_csv('./game_set.csv')
 game = QuizGame(game_set)
 game.quiz()
+

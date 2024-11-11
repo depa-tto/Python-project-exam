@@ -250,7 +250,7 @@ class QuizGame:
             time_involved = end_time - start_time
             cprint("*----------------------------------------------------------------------------------------------------*", attrs=["bold"])
             print(f"It took you {time_involved:.2f} seconds to solve the quiz")
-            if self.score / n_round > 0.6:
+            if self.score / n_round > 0.6 and time_involved / n_round < 10:
                 print(f"Good job! Your final score is {self.score}/{n_round}")
             else:
                 print(f"You can do better! your final score is {self.score}/{n_round}")

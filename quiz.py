@@ -24,16 +24,16 @@ class QuizGame:
         """Prompts the user to choose a difficulty level and filters the dataset accordingly."""
         while True:
             dif = (
-                str(input("Please choose the difficulty between easy, medium and hard: "))
+                str(input("🔸 Please choose the difficulty between easy, medium and hard: "))
                 .strip()
                 .lower()
             )
             if dif not in ["hard", "medium", "easy"]:
-                print("Please insert a proper difficulty ")
+                print("🔸 Please insert a proper difficulty ")
             else:
                 if dif == "hard":
                     self.dataset = self.dataset[(self.dataset["start_year"] <= 1974)]
-                    print("Rules: +1 if you are correct, -1 otherwise")
+                    print("🔸 Rules: +1 if you are correct, -1 otherwise")
                 elif dif == "medium":
                     self.dataset = self.dataset[
                         (self.dataset["start_year"] >= 1975)
@@ -44,7 +44,7 @@ class QuizGame:
                             )
                         )
                     ]
-                    print("Rules: +1 if you are correct, -0.5 otherwise")
+                    print("🔸 Rules: +1 if you are correct, -0.5 otherwise")
                 elif dif == "easy":
                     self.dataset = self.dataset[
                         (self.dataset["start_year"] >= 2005)
@@ -69,7 +69,7 @@ class QuizGame:
                             )
                         )
                     ]
-                    print("Rules: +1 if you are correct, 0 otherwise")
+                    print("🔸 Rules: +1 if you are correct, 0 otherwise")
                 return self.dataset, dif
 
     def first_question(self):
@@ -126,12 +126,12 @@ class QuizGame:
         if my_answer == correct_answer:
             self.score += 1
             cprint(
-                f"You are correct, '{correct_answer}' is the right answer", 'green'
+                f"✅ You are correct, '{correct_answer}' is the right answer", 'green'
             )
             print(f"Your current score is: {self.score}")
         else:
             cprint(
-                f"Your answer was '{my_answer}' but the correct one is '{correct_answer}'", 'red'
+                f"❌ Your answer was '{my_answer}' but the correct one is '{correct_answer}'", 'red'
             )
             if dif == "hard":
                 self.score -= 1
@@ -213,24 +213,24 @@ class QuizGame:
         """Prompts the user for the number of rounds they wish to play."""
         while True:
             try:
-                n_round = int(input("How many rounds do you want to play? "))
+                n_round = int(input("🔸 How many rounds do you want to play? "))
                 if n_round > 0:
                     return n_round
                 else:
-                    print("Please enter a positive number of rounds ")
+                    print("🔸 Please enter a positive number of rounds ")
             except ValueError:
-                print("Please enter a positive number of rounds ")
+                print("🔸 Please enter a positive number of rounds ")
 
     def quiz(self):
         """Main quiz function to conduct the quiz game with rounds and score tracking."""
         cprint(
-            "Welcome to the quiz game about movies and tv series!", attrs=["bold"]
+            "🎬 Welcome to the quiz game about movies and tv series!®️ ", attrs=["bold"]
         )
         self.score = 0
         while True:
             self.dataset, dif = self.difficulty()
             n_round = self.rounds()
-            cprint(f"You are going to play for {n_round} rounds at {dif} level", attrs=["bold"])
+            cprint(f"👉 You are going to play for {n_round} rounds at {dif} level", attrs=["bold"])
             start_time = time.time()
             question_funcs = [
                 self.first_question,
@@ -252,25 +252,25 @@ class QuizGame:
             end_time = time.time()
             time_involved = end_time - start_time
             cprint("*----------------------------------------------------------------------------------------------------*", attrs=["bold"])
-            print(f"It took you {time_involved:.2f} seconds to solve the quiz")
-            if self.score / n_round > 0.6 and time_involved / n_round > 10:
-                print(f"Good job! Your final score is {self.score}/{n_round}. Try again to complete the quiz faster!")
-            elif self.score / n_round > 0.6 and time_involved / n_round < 10:
-                print(f"Good job! Your final score is {self.score}/{n_round} and you were preatty fast!")
+            print(f"⌛ It took you {time_involved:.2f} seconds to solve the quiz")
+            if self.score / n_round > 0.6 and time_involved / n_round < 10:
+                print(f"🥇 Good job! Your final score is {self.score}/{n_round} and you were preatty fast!")
+            elif self.score / n_round > 0.6 and time_involved / n_round > 10:
+                print(f"🥈 Good job! Your final score is {self.score}/{n_round}. Try again to complete the quiz faster!")
             else:
-                print(f"You can do better! your final score is {self.score}/{n_round}")
+                print(f"🥉 You can do better! your final score is {self.score}/{n_round}")
             play_again = str(
                 input(
-                    "Thank you for playing, would you like to play again ? Enter 'yes' or 'no': "
+                    "🔸 Thank you for playing, would you like to play again ? Enter 'yes' or 'no': "
                 )
             )
             if play_again == "no":
-                cprint("You are exiting the game, thank you for playing!", attrs=["bold"])
+                cprint("👋 You are exiting the game, thank you for playing!", attrs=["bold"])
                 break
             if play_again == "yes":
                 self.score = 0
                 self.dataset = pd.read_csv("./game_set.csv")
                 cprint("*----------------------------------------------------------------------------------------------------*", attrs=["bold"])
             else:
-                cprint("You are exiting the game, thank you for playing!", attrs=["bold"])
+                cprint("👋 You are exiting the game, thank you for playing!", attrs=["bold"])
                 break

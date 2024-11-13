@@ -12,5 +12,5 @@ This project is a Python-based quiz application that uses data analysis and a st
 
 ## How to run the Project
 - Run dataset_merge.py to generate the necessary datasets.
-- Use py_project.py for initial data analysis (optional but recommended to understand dataset insights).
+- Use descriptive_analysis.ipynb for initial data analysis (optional but recommended to understand dataset insights).
 - Execute game.py to start and play the quiz.

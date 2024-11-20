@@ -1,14 +1,13 @@
 """
 game.py
 
-This module contains the code for a simple game where the player
-competes against the computer. The game logic includes handling
-player inputs, calculating scores, and determining the winner.
+This module is the main game execution file. Running this file launches 
+the quiz game interface, where users can play and answer questions.
 """
-import pandas as pd # type: ignore
-from quiz import QuizGame # type: ignore
 
-game_set = pd.read_csv('./game_set.csv')
-game = QuizGame(game_set)
-game.quiz()
+import pandas as pd  # type: ignore
+from quiz import QuizGame  # type: ignore
 
+game_set = pd.read_csv("./game_set.csv")  # load the game_set dataset
+game = QuizGame(game_set)  # initialize the QuizGame object with le loaded fataset
+game.quiz()  # start the quiz

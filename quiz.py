@@ -2,7 +2,8 @@
 quiz.py
 
 This module contains the logic for a quiz application.
-It includes functions to ask questions, validate answers, calculate scores, and display results to the user.
+It includes functions to ask questions, validate answers, calculate scores, 
+and display results to the user.
 """
 
 import time  # type: ignore
@@ -387,7 +388,7 @@ class QuizGame:
                 )
             else:
                 print(
-                    f"🥉 You can do better! your final score is {self.score}/{n_round}"
+                    f"🥉 You can do better! Your final score is {self.score}/{n_round}"
                 )
             play_again = str(
                 input(
@@ -396,7 +397,7 @@ class QuizGame:
             )
             if play_again == "no":
                 cprint(
-                    "👋 You are exiting the game, thank you for playing!",
+                    "👋 You are exiting the game, bye!",
                     attrs=["bold"],
                 )
                 break
@@ -409,7 +410,7 @@ class QuizGame:
                 )
             else:
                 cprint(
-                    "👋 You are exiting the game, thank you for playing!",
+                    "👋 You are exiting the game, bye!",
                     attrs=["bold"],
                 )
                 break

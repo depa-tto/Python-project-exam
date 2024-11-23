@@ -455,6 +455,8 @@ class QuizGame:
                 input(
                     "🔸 Thank you for playing, would you like to play again ? Enter 'yes' or 'no': "
                 )
+                .strip()
+                .lower()
             )
             if play_again == "no":
                 cprint(
